@@ -10,5 +10,5 @@ Use App\Http\Controllers\TeacherController;
 Route::get('/', [FacultyController::class, 'index']);
 
 Route::resource('faculty', FacultyController::class);
-Route::resource('career', FacultyController::class);
-Route::resource('teacher', FacultyController::class);
+Route::resource('career', CareerController::class);
+Route::resource('teacher', TeacherController::class);
