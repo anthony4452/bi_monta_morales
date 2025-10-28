@@ -372,18 +372,9 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{{ url('/') }}" class="active"><i class="bi bi-house-door me-1"></i> Inicio</a></li>
-                    <li><a href="#"><i class="bi bi-book me-1"></i> Cursos</a></li>
-                    <li><a href="#"><i class="bi bi-calendar-event me-1"></i> Eventos</a></li>
-                    <li class="dropdown">
-                        <a href="#"><i class="bi bi-gear me-1"></i> Administración <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="#"><i class="bi bi-eye me-1"></i> Ver Puntos</a></li>
-                            <li><a href="#"><i class="bi bi-plus-circle me-1"></i> Crear Punto</a></li>
-                            <li><a href="#"><i class="bi bi-map me-1"></i> Mapa Global</a></li>
-                            <li><a href="#"><i class="bi bi-people me-1"></i> Gestión de Usuarios</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="bi bi-info-circle me-1"></i> Acerca de</a></li>
+                    <li><a href="#"><i class="bi bi-book me-1"></i> Facultades</a></li>
+                    <li><a href="#"><i class="bi bi-calendar-event me-1"></i> Carreras</a></li>
+                    <li><a href="#"><i class="bi bi-info-circle me-1"></i> Profesores</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
