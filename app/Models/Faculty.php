@@ -10,16 +10,15 @@ class Faculty extends Model
     use HasFactory;
 
     protected $table = 'faculties';
-    protected $primaryKey = 'id_fac';
     public $timestamps = false;
 
     protected $fillable = [
-        'name_fac',
-        'acronym_fac',
-        'dean_name_fac',
-        'phone_fac',
-        'email_fac',
-        'logo_fac',
-        'year_foundation_fac'
+        'name',
+        'acronym', 
+        'dean_name',
+        'phone',
+        'email',
+        'logo',
+        'year_foundation'
     ];
 }

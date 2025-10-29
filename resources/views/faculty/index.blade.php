@@ -30,25 +30,25 @@
         <tbody>
             @foreach ($faculty as $item)
                 <tr>
-                    <td>{{ $item->name_fac }}</td>
-                    <td>{{ $item->acronym_fac }}</td>
-                    <td>{{ $item->dean_name_fac }}</td>
-                    <td>{{ $item->phone_fac }}</td>
-                    <td>{{ $item->email_fac }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->acronym }}</td>
+                    <td>{{ $item->dean_name }}</td>
+                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->email }}</td>
                     <td class="text-center">
-                        @if($item->logo_fac)
-                            <img src="{{ asset($item->logo_fac) }}" width="60" class="img-thumbnail" alt="Logo {{ $item->name_fac }}">
+                        @if($item->logo)
+                            <img src="{{ asset($item->logo) }}" width="60" class="img-thumbnail" alt="Logo {{ $item->name }}">
                         @else
                             <span class="text-muted">Sin logo</span>
                         @endif
                     </td>
-                    <td>{{ $item->year_foundation_fac }}</td>
+                    <td>{{ $item->year_foundation }}</td>
                     <td class="text-center">
-                        <a href="{{ route('faculty.edit', $item->id_fac) }}" class="btn btn-outline-warning btn-sm mb-1">
+                        <a href="{{ route('faculty.edit', $item->id) }}" class="btn btn-outline-warning btn-sm mb-1">
                             <i class="fas fa-edit"></i> Editar
                         </a>
 
-                        <form action="{{ route('faculty.destroy', $item->id_fac) }}" method="POST" class="d-inline" id="eliminar-form-{{ $item->id_fac }}">
+                        <form action="{{ route('faculty.destroy', $item->id) }}" method="POST" class="d-inline" id="eliminar-form-{{ $item->id }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger btn-sm">

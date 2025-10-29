@@ -31,13 +31,21 @@ class FacultyController extends Controller
             'logo_fac' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        $datos = $request->except('logo_fac');
+        // Mapear los nombres del formulario a los nombres de la BD
+        $datos = [
+            'name' => $request->name_fac,
+            'acronym' => $request->acronym_fac,
+            'dean_name' => $request->dean_name_fac,
+            'phone' => $request->phone_fac,
+            'email' => $request->email_fac,
+            'year_foundation' => $request->year_foundation_fac
+        ];
 
         if ($request->hasFile('logo_fac')) {
             $archivo = $request->file('logo_fac');
             $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
             $archivo->move(public_path('logos/'), $nombreArchivo);
-            $datos['logo_fac'] = 'logos/' . $nombreArchivo;
+            $datos['logo'] = 'logos/' . $nombreArchivo;
         }
 
         Faculty::create($datos);
@@ -71,18 +79,26 @@ class FacultyController extends Controller
             'logo_fac' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        $datos = $request->except('logo_fac');
+        // Mapear los nombres del formulario a los nombres de la BD
+        $datos = [
+            'name' => $request->name_fac,
+            'acronym' => $request->acronym_fac,
+            'dean_name' => $request->dean_name_fac,
+            'phone' => $request->phone_fac,
+            'email' => $request->email_fac,
+            'year_foundation' => $request->year_foundation_fac
+        ];
 
         if ($request->hasFile('logo_fac')) {
             // eliminar logo anterior si existe
-            if ($faculty->logo_fac && File::exists(public_path($faculty->logo_fac))) {
-                File::delete(public_path($faculty->logo_fac));
+            if ($faculty->logo && File::exists(public_path($faculty->logo))) {
+                File::delete(public_path($faculty->logo));
             }
 
             $archivo = $request->file('logo_fac');
             $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
             $archivo->move(public_path('logos/'), $nombreArchivo);
-            $datos['logo_fac'] = 'logos/' . $nombreArchivo;
+            $datos['logo'] = 'logos/' . $nombreArchivo;
         }
 
         $faculty->update($datos);
@@ -94,9 +110,9 @@ class FacultyController extends Controller
     {
         $faculty = Faculty::findOrFail($id);
 
-        // eliminar logo si existe
-        if ($faculty->logo_fac && File::exists(public_path($faculty->logo_fac))) {
-            File::delete(public_path($faculty->logo_fac));
+        // eliminar logo si existe - CORREGIDO: usar 'logo' en lugar de 'logo_fac'
+        if ($faculty->logo && File::exists(public_path($faculty->logo))) {
+            File::delete(public_path($faculty->logo));
         }
 
         $faculty->delete();

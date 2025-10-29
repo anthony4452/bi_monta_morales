@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('contenido')
-<form action="{{ route('faculty.update', $faculty->id_fac) }}" method="POST" enctype="multipart/form-data" id="formEditFaculty"
+<form action="{{ route('faculty.update', $faculty->id) }}" method="POST" enctype="multipart/form-data" id="formEditFaculty"
       style="max-width: 700px; margin: auto; font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
     @csrf
     @method('PUT')
@@ -9,40 +9,40 @@
 
     <div class="mb-3">
         <label for="name_fac" class="form-label fw-bold">Nombre:</label>
-        <input type="text" name="name_fac" id="name_fac" class="form-control" value="{{ $faculty->name_fac }}" required>
+        <input type="text" name="name_fac" id="name_fac" class="form-control" value="{{ $faculty->name }}" required>
     </div>
 
     <div class="mb-3">
         <label for="acronym_fac" class="form-label fw-bold">Acrónimo:</label>
-        <input type="text" name="acronym_fac" id="acronym_fac" class="form-control" value="{{ $faculty->acronym_fac }}" required>
+        <input type="text" name="acronym_fac" id="acronym_fac" class="form-control" value="{{ $faculty->acronym }}" required>
     </div>
 
     <div class="mb-3">
         <label for="dean_name_fac" class="form-label fw-bold">Decano:</label>
-        <input type="text" name="dean_name_fac" id="dean_name_fac" class="form-control" value="{{ $faculty->dean_name_fac }}" required>
+        <input type="text" name="dean_name_fac" id="dean_name_fac" class="form-control" value="{{ $faculty->dean_name }}" required>
     </div>
 
     <div class="mb-3">
         <label for="phone_fac" class="form-label fw-bold">Teléfono:</label>
-        <input type="text" name="phone_fac" id="phone_fac" class="form-control" value="{{ $faculty->phone_fac }}" required>
+        <input type="text" name="phone_fac" id="phone_fac" class="form-control" value="{{ $faculty->phone }}" required>
     </div>
 
     <div class="mb-3">
         <label for="email_fac" class="form-label fw-bold">Email:</label>
-        <input type="email" name="email_fac" id="email_fac" class="form-control" value="{{ $faculty->email_fac }}" required>
+        <input type="email" name="email_fac" id="email_fac" class="form-control" value="{{ $faculty->email }}" required>
     </div>
 
     <div class="mb-3">
         <label for="logo_fac" class="form-label fw-bold">Logo:</label><br>
-        @if($faculty->logo_fac)
-            <img src="{{ asset($faculty->logo_fac) }}" width="120" class="img-thumbnail mb-2" alt="Logo actual">
+        @if($faculty->logo)
+            <img src="{{ asset($faculty->logo) }}" width="120" class="img-thumbnail mb-2" alt="Logo actual">
         @endif
         <input type="file" name="logo_fac" id="logo_fac" class="form-control">
     </div>
 
     <div class="mb-3">
         <label for="year_foundation_fac" class="form-label fw-bold">Año de Fundación:</label>
-        <input type="number" name="year_foundation_fac" id="year_foundation_fac" class="form-control" value="{{ $faculty->year_foundation_fac }}" required>
+        <input type="number" name="year_foundation_fac" id="year_foundation_fac" class="form-control" value="{{ $faculty->year_foundation }}" required>
     </div>
 
     <div class="d-flex justify-content-center">
