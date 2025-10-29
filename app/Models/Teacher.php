@@ -14,17 +14,23 @@ class Teacher extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'first_name',    // First name / Nombre
-        'last_name',     // Last name / Apellido
-        'email',         // Email / Correo electrónico
-        'phone',         // Phone / Teléfono
-        'specialization',// Specialization / Especialidad
-        'degree',        // Academic degree / Título académico
-        'career_id'      // Foreign key to Career / Clave foránea a carrera
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'specialization',
+        'degree',
+        'photo',
+        'career_id'
     ];
 
-    // Relationship: Teacher belongs to Career / Relación: El profesor pertenece a una carrera
+    // Relationship: Teacher belongs to Career
     public function career() {
         return $this->belongsTo(Career::class);
+    }
+
+    // Accessor for full name
+    public function getFullNameAttribute() {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

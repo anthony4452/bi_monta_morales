@@ -371,10 +371,9 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="{{ url('/') }}" class="active"><i class="bi bi-house-door me-1"></i> Inicio</a></li>
-                    <li><a href="#"><i class="bi bi-book me-1"></i> Facultades</a></li>
+                    <li><a href="{{ url('/') }}"><i class="bi bi-book me-1"></i> Facultades</a></li>
                     <li><a href="#"><i class="bi bi-calendar-event me-1"></i> Carreras</a></li>
-                    <li><a href="#"><i class="bi bi-info-circle me-1"></i> Profesores</a></li>
+                    <li><a href="{{ url('teacher') }}"><i class="bi bi-info-circle me-1"></i> Profesores</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>

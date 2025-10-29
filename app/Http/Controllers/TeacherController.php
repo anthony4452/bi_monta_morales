@@ -3,62 +3,127 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Teacher;
+use App\Models\Career;
+use Illuminate\Support\Facades\File;
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $teachers = Teacher::with('career')->get();
+        return view('teacher.index', compact('teachers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $careers = Career::all();
+        return view('teacher.new', compact('careers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'first_name_teacher' => 'required|min:2',
+            'last_name_teacher' => 'required|min:2',
+            'email_teacher' => 'required|email|unique:teachers,email',
+            'phone_teacher' => 'required',
+            'specialization_teacher' => 'required|min:3',
+            'degree_teacher' => 'required|min:3',
+            'career_id_teacher' => 'required|exists:careers,id',
+            'photo_teacher' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
+        ]);
+
+        // Mapear los nombres del formulario a los nombres de la BD
+        $datos = [
+            'first_name' => $request->first_name_teacher,
+            'last_name' => $request->last_name_teacher,
+            'email' => $request->email_teacher,
+            'phone' => $request->phone_teacher,
+            'specialization' => $request->specialization_teacher,
+            'degree' => $request->degree_teacher,
+            'career_id' => $request->career_id_teacher
+        ];
+
+        if ($request->hasFile('photo_teacher')) {
+            $archivo = $request->file('photo_teacher');
+            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+            $archivo->move(public_path('teachers/'), $nombreArchivo);
+            $datos['photo'] = 'teachers/' . $nombreArchivo;
+        }
+
+        Teacher::create($datos);
+
+        return redirect()->route('teacher.index')->with('success', 'Profesor creado exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $teacher = Teacher::with('career')->findOrFail($id);
+        return view('teacher.show', compact('teacher'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $teacher = Teacher::findOrFail($id);
+        $careers = Career::all();
+        return view('teacher.edit', compact('teacher', 'careers'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $teacher = Teacher::findOrFail($id);
+
+        $request->validate([
+            'first_name_teacher' => 'required|min:2',
+            'last_name_teacher' => 'required|min:2',
+            'email_teacher' => 'required|email|unique:teachers,email,' . $id,
+            'phone_teacher' => 'required',
+            'specialization_teacher' => 'required|min:3',
+            'degree_teacher' => 'required|min:3',
+            'career_id_teacher' => 'required|exists:careers,id',
+            'photo_teacher' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
+        ]);
+
+        // Mapear los nombres del formulario a los nombres de la BD
+        $datos = [
+            'first_name' => $request->first_name_teacher,
+            'last_name' => $request->last_name_teacher,
+            'email' => $request->email_teacher,
+            'phone' => $request->phone_teacher,
+            'specialization' => $request->specialization_teacher,
+            'degree' => $request->degree_teacher,
+            'career_id' => $request->career_id_teacher
+        ];
+
+        if ($request->hasFile('photo_teacher')) {
+            // eliminar foto anterior si existe
+            if ($teacher->photo && File::exists(public_path($teacher->photo))) {
+                File::delete(public_path($teacher->photo));
+            }
+
+            $archivo = $request->file('photo_teacher');
+            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+            $archivo->move(public_path('teachers/'), $nombreArchivo);
+            $datos['photo'] = 'teachers/' . $nombreArchivo;
+        }
+
+        $teacher->update($datos);
+
+        return redirect()->route('teacher.index')->with('success', 'Profesor actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $teacher = Teacher::findOrFail($id);
+
+        // eliminar foto si existe
+        if ($teacher->photo && File::exists(public_path($teacher->photo))) {
+            File::delete(public_path($teacher->photo));
+        }
+
+        $teacher->delete();
+
+        return redirect()->route('teacher.index')->with('success', 'Profesor eliminado correctamente.');
     }
 }
