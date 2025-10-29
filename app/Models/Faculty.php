@@ -10,15 +10,21 @@ class Faculty extends Model
     use HasFactory;
 
     protected $table = 'faculties';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 
     protected $fillable = [
         'name',
-        'acronym', 
+        'acronym',
         'dean_name',
         'phone',
         'email',
-        'logo',
-        'year_foundation'
+        'year_foundation',
+        'logo'
     ];
+
+    public function careers()
+    {
+        return $this->hasMany(Career::class, 'faculty_id');
+    }
 }

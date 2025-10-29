@@ -9,10 +9,6 @@
     </a>
 </div>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
 <div class="table-responsive">
     <table id="facultyTable" class="table table-striped table-bordered align-middle text-center">
         <thead class="table-dark">
@@ -66,7 +62,26 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    // SweetAlert confirm delete
+    // Mensajes SweetAlert de éxito o error
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: "{{ session('success') }}",
+            confirmButtonColor: '#3085d6',
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: "{{ session('error') }}",
+            confirmButtonColor: '#3085d6',
+        });
+    @endif
+
+    // Confirmación para eliminar
     document.querySelectorAll('form[id^="eliminar-form-"]').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -87,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // DataTable (si usas la versión que llamas con new DataTable)
+    // DataTable
     let table = new DataTable('#facultyTable', {
         paging: true,
         responsive: true,

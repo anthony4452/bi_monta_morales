@@ -31,8 +31,7 @@ class FacultyController extends Controller
             'logo_fac' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        // Mapear los nombres del formulario a los nombres de la BD
-        $datos = [
+         $datos = [
             'name' => $request->name_fac,
             'acronym' => $request->acronym_fac,
             'dean_name' => $request->dean_name_fac,
@@ -79,7 +78,6 @@ class FacultyController extends Controller
             'logo_fac' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        // Mapear los nombres del formulario a los nombres de la BD
         $datos = [
             'name' => $request->name_fac,
             'acronym' => $request->acronym_fac,
@@ -90,7 +88,6 @@ class FacultyController extends Controller
         ];
 
         if ($request->hasFile('logo_fac')) {
-            // eliminar logo anterior si existe
             if ($faculty->logo && File::exists(public_path($faculty->logo))) {
                 File::delete(public_path($faculty->logo));
             }
@@ -110,13 +107,20 @@ class FacultyController extends Controller
     {
         $faculty = Faculty::findOrFail($id);
 
-        // eliminar logo si existe - CORREGIDO: usar 'logo' en lugar de 'logo_fac'
+        if ($faculty->careers()->count() > 0) {
+            return redirect()->route('faculty.index')
+                ->with('error', 'No se puede eliminar la facultad porque tiene carreras asociadas.');
+        }
+
         if ($faculty->logo && File::exists(public_path($faculty->logo))) {
             File::delete(public_path($faculty->logo));
         }
 
         $faculty->delete();
 
-        return redirect()->route('faculty.index')->with('success', 'Facultad eliminada correctamente.');
+        return redirect()->route('faculty.index')
+            ->with('success', 'Facultad eliminada correctamente.');
     }
+
+
 }

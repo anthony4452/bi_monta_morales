@@ -23,7 +23,6 @@
                 <th>Especialización</th>
                 <th>Título Académico</th>
                 <th>Carrera</th>
-                <th>Foto</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -36,13 +35,7 @@
                     <td>{{ $teacher->specialization }}</td>
                     <td>{{ $teacher->degree }}</td>
                     <td>{{ $teacher->career->name ?? 'Sin carrera' }}</td>
-                    <td class="text-center">
-                        @if($teacher->photo)
-                            <img src="{{ asset($teacher->photo) }}" width="60" class="img-thumbnail rounded-circle" alt="Foto {{ $teacher->first_name }}">
-                        @else
-                            <span class="text-muted">Sin foto</span>
-                        @endif
-                    </td>
+
                     <td class="text-center">
                         <a href="{{ route('teacher.edit', $teacher->id) }}" class="btn btn-outline-warning btn-sm mb-1">
                             <i class="fas fa-edit"></i> Editar
@@ -66,7 +59,26 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    // SweetAlert confirm delete
+    // Mostrar SweetAlert según la sesión
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: "{{ session('success') }}",
+            confirmButtonColor: '#3085d6',
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: "{{ session('error') }}",
+            confirmButtonColor: '#3085d6',
+        });
+    @endif
+
+    // Confirmación para eliminar
     document.querySelectorAll('form[id^="eliminar-form-"]').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -87,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // DataTable
+    // Inicializar DataTable
     let table = new DataTable('#teacherTable', {
         paging: true,
         responsive: true,
@@ -104,5 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+
 
 @endsection

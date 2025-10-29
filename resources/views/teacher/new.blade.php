@@ -50,10 +50,6 @@
         </select>
     </div>
 
-    <div class="mb-3">
-        <label for="photo_teacher" class="form-label fw-bold">Foto:</label>
-        <input type="file" name="photo_teacher" id="photo_teacher" class="form-control">
-    </div>
 
     <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-success me-2">Guardar</button>

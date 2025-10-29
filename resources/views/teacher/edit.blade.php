@@ -1,43 +1,52 @@
 @extends('layout.app')
 
 @section('contenido')
-<form action="{{ route('teacher.store') }}" method="POST" enctype="multipart/form-data" id="formNuevoTeacher"
+
+<form action="{{ route('teacher.update', $teacher->id) }}" method="POST" enctype="multipart/form-data" id="formEditTeacher"
       style="max-width: 700px; margin: auto; font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
     @csrf
-    <h1 class="text-center mb-4">Registrar Nuevo Profesor</h1>
+    @method('PUT')
+
+    <h1 class="text-center mb-4">Editar Profesor</h1>
 
     <div class="row">
         <div class="col-md-6 mb-3">
             <label for="first_name_teacher" class="form-label fw-bold">Nombre:</label>
-            <input type="text" name="first_name_teacher" id="first_name_teacher" class="form-control" required>
+            <input type="text" name="first_name_teacher" id="first_name_teacher" class="form-control"
+                   value="{{ old('first_name_teacher', $teacher->first_name) }}" required>
         </div>
 
         <div class="col-md-6 mb-3">
             <label for="last_name_teacher" class="form-label fw-bold">Apellido:</label>
-            <input type="text" name="last_name_teacher" id="last_name_teacher" class="form-control" required>
+            <input type="text" name="last_name_teacher" id="last_name_teacher" class="form-control"
+                   value="{{ old('last_name_teacher', $teacher->last_name) }}" required>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6 mb-3">
             <label for="email_teacher" class="form-label fw-bold">Email:</label>
-            <input type="email" name="email_teacher" id="email_teacher" class="form-control" required>
+            <input type="email" name="email_teacher" id="email_teacher" class="form-control"
+                   value="{{ old('email_teacher', $teacher->email) }}" required>
         </div>
 
         <div class="col-md-6 mb-3">
             <label for="phone_teacher" class="form-label fw-bold">Teléfono:</label>
-            <input type="text" name="phone_teacher" id="phone_teacher" class="form-control" required>
+            <input type="text" name="phone_teacher" id="phone_teacher" class="form-control"
+                   value="{{ old('phone_teacher', $teacher->phone) }}" required>
         </div>
     </div>
 
     <div class="mb-3">
         <label for="specialization_teacher" class="form-label fw-bold">Especialización:</label>
-        <input type="text" name="specialization_teacher" id="specialization_teacher" class="form-control" required>
+        <input type="text" name="specialization_teacher" id="specialization_teacher" class="form-control"
+               value="{{ old('specialization_teacher', $teacher->specialization) }}" required>
     </div>
 
     <div class="mb-3">
         <label for="degree_teacher" class="form-label fw-bold">Título Académico:</label>
-        <input type="text" name="degree_teacher" id="degree_teacher" class="form-control" required>
+        <input type="text" name="degree_teacher" id="degree_teacher" class="form-control"
+               value="{{ old('degree_teacher', $teacher->degree) }}" required>
     </div>
 
     <div class="mb-3">
@@ -45,18 +54,17 @@
         <select name="career_id_teacher" id="career_id_teacher" class="form-select" required>
             <option value="">Seleccione una carrera</option>
             @foreach($careers as $career)
-                <option value="{{ $career->id }}">{{ $career->name }}</option>
+                <option value="{{ $career->id }}"
+                    {{ old('career_id_teacher', $teacher->career_id) == $career->id ? 'selected' : '' }}>
+                    {{ $career->name }}
+                </option>
             @endforeach
         </select>
     </div>
 
-    <div class="mb-3">
-        <label for="photo_teacher" class="form-label fw-bold">Foto:</label>
-        <input type="file" name="photo_teacher" id="photo_teacher" class="form-control">
-    </div>
 
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-success me-2">Guardar</button>
+        <button type="submit" class="btn btn-success me-2">Actualizar</button>
         <a href="{{ route('teacher.index') }}" class="btn btn-danger">Cancelar</a>
     </div>
 </form>
@@ -64,6 +72,7 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    // FileInput
     $("#photo_teacher").fileinput({
         language: "es",
         allowedFileExtensions: ["png", "jpg", "jpeg"],
@@ -73,7 +82,8 @@ $(document).ready(function() {
         theme: "fas"
     });
 
-    $("#formNuevoTeacher").validate({
+    // jQuery Validate
+    $("#formEditTeacher").validate({
         rules: {
             "first_name_teacher": { required: true, minlength: 2 },
             "last_name_teacher": { required: true, minlength: 2 },
@@ -96,4 +106,5 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+
 @endsection

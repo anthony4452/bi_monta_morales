@@ -15,17 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->nullable();
-            $table->unsignedBigInteger('faculty_id'); // FK a faculties
+            $table->unsignedBigInteger('faculty_id');
             $table->integer('duration_years')->nullable();
             $table->string('level')->nullable();
             $table->string('degree_awarded')->nullable();
-            $table->boolean('status')->default(1);
+            $table->string('status')->default('activo'); // <--- ya es string
 
-            // Clave foránea
             $table->foreign('faculty_id')->references('id')->on('faculties')->onDelete('cascade');
         });
-
     }
+
 
     /**
      * Reverse the migrations.

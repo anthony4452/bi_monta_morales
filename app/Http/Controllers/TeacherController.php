@@ -34,7 +34,6 @@ class TeacherController extends Controller
             'photo_teacher' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        // Mapear los nombres del formulario a los nombres de la BD
         $datos = [
             'first_name' => $request->first_name_teacher,
             'last_name' => $request->last_name_teacher,
@@ -85,7 +84,6 @@ class TeacherController extends Controller
             'photo_teacher' => 'nullable|image|mimes:jpg,jpeg,png|max:4096'
         ]);
 
-        // Mapear los nombres del formulario a los nombres de la BD
         $datos = [
             'first_name' => $request->first_name_teacher,
             'last_name' => $request->last_name_teacher,
@@ -97,7 +95,6 @@ class TeacherController extends Controller
         ];
 
         if ($request->hasFile('photo_teacher')) {
-            // eliminar foto anterior si existe
             if ($teacher->photo && File::exists(public_path($teacher->photo))) {
                 File::delete(public_path($teacher->photo));
             }
@@ -117,7 +114,6 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::findOrFail($id);
 
-        // eliminar foto si existe
         if ($teacher->photo && File::exists(public_path($teacher->photo))) {
             File::delete(public_path($teacher->photo));
         }

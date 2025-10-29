@@ -66,7 +66,7 @@ $(document).ready(function() {
             "dean_name_fac": { required: true, minlength: 3 },
             "phone_fac": { required: true },
             "email_fac": { required: true, email: true },
-            "year_foundation_fac": { required: true, digits: true }
+            "year_foundation_fac": { required: true, digits: true, min: 2000, max:2020 }
         },
         messages: {
             "name_fac": { required: "Por favor ingresa el nombre.", minlength: "Mínimo 3 caracteres." },
@@ -74,7 +74,8 @@ $(document).ready(function() {
             "dean_name_fac": { required: "Por favor ingresa el decano." },
             "phone_fac": { required: "Por favor ingresa el teléfono." },
             "email_fac": { required: "Por favor ingresa el email.", email: "Email no válido." },
-            "year_foundation_fac": { required: "Por favor ingresa el año.", digits: "Sólo números." }
+            "year_foundation_fac": { required: "Por favor ingresa el año.", digits: "Sólo números.", min: "El año debe ser ≥ 2000", 
+            max: "El año debe ser ≤ 2020" }
         }
     });
 });

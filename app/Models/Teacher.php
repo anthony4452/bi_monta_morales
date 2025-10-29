@@ -20,16 +20,13 @@ class Teacher extends Model
         'phone',
         'specialization',
         'degree',
-        'photo',
         'career_id'
     ];
 
-    // Relationship: Teacher belongs to Career
     public function career() {
         return $this->belongsTo(Career::class);
     }
 
-    // Accessor for full name
     public function getFullNameAttribute() {
         return $this->first_name . ' ' . $this->last_name;
     }
